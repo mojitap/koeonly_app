@@ -1,3 +1,5 @@
+setuptools
+wheel
 Flask==2.3.3
 Flask-Cors==6.0.0
 Flask-Login==0.6.3
