@@ -1,6 +1,7 @@
-// ✅ RegisterPage.jsx
+// ✅ RegisterPage.jsx 完成形
 import React, { useState } from 'react';
 import IconSelectModal from "../components/IconSelectModal";
+import MainIconHeader from "../components/MainIconHeader";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -65,61 +66,66 @@ const RegisterPage = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>ユーザー登録</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input type="text" name="nickname" placeholder="ニックネーム" value={formData.nickname} onChange={handleChange} style={styles.input} required />
-        <input type="text" name="emailOrPhone" placeholder="メールアドレス or 電話番号" value={formData.emailOrPhone} onChange={handleChange} style={styles.input} required />
-        <div style={styles.row}>
-          <select name="gender" value={formData.gender} onChange={handleChange} style={styles.select} required>
-            <option value="">性別</option>
-            <option value="男性">男性</option>
-            <option value="女性">女性</option>
-            <option value="未回答">未回答</option>
-          </select>
-          <select name="ageGroup" value={formData.ageGroup} onChange={handleChange} style={styles.select} required>
-            <option value="">年齢帯</option>
-            <option value="10代">10代</option>
-            <option value="20代">20代</option>
-            <option value="30代">30代</option>
-            <option value="40代以上">40代以上</option>
-          </select>
+    <>
+      <MainIconHeader />
+      <div style={{ paddingTop: '80px' }}>
+        <div style={styles.container}>
+          <h2 style={styles.title}>ユーザー登録</h2>
+          <form onSubmit={handleSubmit} style={styles.form}>
+            <input type="text" name="nickname" placeholder="ニックネーム" value={formData.nickname} onChange={handleChange} style={styles.input} required />
+            <input type="text" name="emailOrPhone" placeholder="メールアドレス or 電話番号" value={formData.emailOrPhone} onChange={handleChange} style={styles.input} required />
+            <div style={styles.row}>
+              <select name="gender" value={formData.gender} onChange={handleChange} style={styles.select} required>
+                <option value="">性別</option>
+                <option value="男性">男性</option>
+                <option value="女性">女性</option>
+                <option value="未回答">未回答</option>
+              </select>
+              <select name="ageGroup" value={formData.ageGroup} onChange={handleChange} style={styles.select} required>
+                <option value="">年齢帯</option>
+                <option value="10代">10代</option>
+                <option value="20代">20代</option>
+                <option value="30代">30代</option>
+                <option value="40代以上">40代以上</option>
+              </select>
+            </div>
+            <input type="text" name="hobby" placeholder="趣味（20文字以内）" maxLength={20} value={formData.hobby} onChange={handleChange} style={styles.input} required />
+            <input type="text" name="weekend" placeholder="休日の過ごし方（20文字以内）" maxLength={20} value={formData.weekend} onChange={handleChange} style={styles.input} required />
+            <div style={styles.voiceUpload}>
+              <label>
+                15秒の自己紹介ボイス
+                <input type="file" name="voiceIntro" accept="audio/*" onChange={handleChange} required />
+              </label>
+              {audioURL && <audio src={audioURL} controls style={{ marginTop: 10 }} />}
+            </div>
+            <div className="text-center mt-4">
+              <button type="button" onClick={() => setIsModalOpen(true)} className="px-4 py-2 bg-gray-200 rounded">
+                アイコンを選ぶ
+              </button>
+            </div>
+            {formData.icon && (
+              <div className="text-center mt-2">
+                <img
+                  src={formData.icon}
+                  alt="選択アイコン"
+                  style={{
+                    width: "80px",
+                    height: "80px",
+                    objectFit: "contain",
+                    borderRadius: "50%",
+                    border: "1px solid #ccc",
+                    display: "block",
+                    margin: "0 auto",
+                  }}
+                />
+              </div>
+            )}
+            <IconSelectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSelect={handleIconSelect} />
+            <button type="submit" style={styles.button}>登録</button>
+          </form>
         </div>
-        <input type="text" name="hobby" placeholder="趣味（20文字以内）" maxLength={20} value={formData.hobby} onChange={handleChange} style={styles.input} required />
-        <input type="text" name="weekend" placeholder="休日の過ごし方（20文字以内）" maxLength={20} value={formData.weekend} onChange={handleChange} style={styles.input} required />
-        <div style={styles.voiceUpload}>
-          <label>
-            15秒の自己紹介ボイス
-            <input type="file" name="voiceIntro" accept="audio/*" onChange={handleChange} required />
-          </label>
-          {audioURL && <audio src={audioURL} controls style={{ marginTop: 10 }} />}
-        </div>
-        <div className="text-center mt-4">
-          <button type="button" onClick={() => setIsModalOpen(true)} className="px-4 py-2 bg-gray-200 rounded">
-            アイコンを選ぶ
-          </button>
-        </div>
-        {formData.icon && (
-          <div className="text-center mt-2">
-            <img
-              src={formData.icon}
-              alt="選択アイコン"
-              style={{
-                width: "80px",
-                height: "80px",
-                objectFit: "contain",
-                borderRadius: "50%",
-                border: "1px solid #ccc",
-                display: "block",
-                margin: "0 auto",
-              }}
-            />
-          </div>
-        )}
-        <IconSelectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSelect={handleIconSelect} />
-        <button type="submit" style={styles.button}>登録</button>
-      </form>
-    </div>
+      </div>
+    </>
   );
 };
 
